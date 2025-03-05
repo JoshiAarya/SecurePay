@@ -1,13 +1,14 @@
 "use client"
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@repo/db/client';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const client = new PrismaClient();
 
 const Signup = () => {
     const [email, setEmail] = useState('');
+    const [number, setNumber] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
@@ -21,13 +22,14 @@ const Signup = () => {
             // Create a new user in the database
             await client.user.create({
                 data: {
-                    email,
+                    number: number,
+                    email: email,
                     password: hashedPassword,
                 },
             });
 
             // Redirect to the login page
-            router.push('/login');
+            router.push('api/auth/login');
         } catch (error) {
             console.error('Failed to sign up', error);
         }
@@ -52,6 +54,16 @@ const Signup = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="text">Password:</label>
+                <input
+                    type="text"
+                    id="number"
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
                     required
                 />
             </div>
