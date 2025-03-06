@@ -1,37 +1,31 @@
-"use client"
-import { PrismaClient } from '@repo/db/client';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import bcrypt from 'bcryptjs';
-
-const client = new PrismaClient();
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Signup = () => {
-    const [email, setEmail] = useState('');
-    const [number, setNumber] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState("");
+    const [number, setNumber] = useState("");
+    const [password, setPassword] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            // Hash the password
-            const hashedPassword = await bcrypt.hash(password, 10);
-
-            // Create a new user in the database
-            await client.user.create({
-                data: {
-                    number: number,
-                    email: email,
-                    password: hashedPassword,
-                },
+            const response = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, number, password }),
             });
 
-            // Redirect to the login page
-            router.push('api/auth/login');
+            if (response.ok) {
+                signIn()
+            } else {
+                console.error("Signup failed");
+            }
         } catch (error) {
-            console.error('Failed to sign up', error);
+            console.error("Failed to sign up", error);
         }
     };
 
@@ -58,7 +52,7 @@ const Signup = () => {
                 />
             </div>
             <div>
-                <label htmlFor="text">Password:</label>
+                <label htmlFor="number">Phone Number:</label> {/* Fixed label */}
                 <input
                     type="text"
                     id="number"
