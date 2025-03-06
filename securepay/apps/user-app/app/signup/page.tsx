@@ -7,6 +7,7 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +59,16 @@ const Signup = () => {
                     id="number"
                     value={number}
                     onChange={(e) => setNumber(e.target.value)}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="name">Name:</label> {/* Fixed label */}
+                <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                 />
             </div>
