@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useSession, signOut } from "next-auth/react";
 
 const Profile: React.FC = () => {
@@ -17,8 +17,9 @@ const Profile: React.FC = () => {
           className="w-20 h-20 rounded-full mt-2"
         />
       )}
-      <p>Name: {session.user?.name}</p>
-      <p>Email: {session.user?.email}</p>
+      <p><strong>Name:</strong> {session.user?.name}</p>
+      <p><strong>Email:</strong> {session.user?.email}</p>
+
       <button
         onClick={() => signOut()}
         className="bg-red-500 text-white px-4 py-2 mt-4 rounded"
