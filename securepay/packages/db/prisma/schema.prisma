@@ -14,12 +14,13 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
-  password String
-  number   String   @unique
-  balance  Balance?
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  name        String?
+  password    String
+  number      String        @unique
+  balance     Balance?
+  transaction Transaction[]
 }
 
 model Balance {
@@ -27,4 +28,14 @@ model Balance {
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int  @unique
   amount Int  @default(0)
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  type      String
+  amount    Int
+  status    String
+  createdAt DateTime @default(now())
 }

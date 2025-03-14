@@ -7,9 +7,7 @@ const prisma = new PrismaClient();
 export async function POST(req: Request) {
     try {
         const { email, password, number, name } = await req.json();
-        console.log(email, password, number, name);
         
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
         
