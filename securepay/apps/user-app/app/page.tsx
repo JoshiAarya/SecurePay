@@ -6,8 +6,8 @@ const client = new PrismaClient()
 export default function Home() {
   return (
     <div>
-      <Appbar/>
-      <h1>Hello From main page</h1>
+      <Appbar></Appbar>
+      <h1>Welcome to SecurePay!</h1>
     </div>
   );
 }
