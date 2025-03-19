@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "../components/NavBar";
-import { usePathname } from "next/navigation";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,12 +23,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-  const hideNavbarRoutes = ["/signup", "/login"];
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      {!hideNavbarRoutes.includes(pathname) && <Navbar />}
+        <Navbar/>
         <Providers>
           {children}
         </Providers>
