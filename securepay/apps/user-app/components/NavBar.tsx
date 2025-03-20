@@ -9,7 +9,7 @@ const Navbar = () => {
         <Link href="/" className="text-white text-lg font-bold">
           SecurePay
         </Link>
-        <div className="space-x-4">
+        <div className="space-x-5">
           <Link href="/" className="text-gray-300 hover:text-white">
             Home
           </Link>
@@ -21,6 +21,9 @@ const Navbar = () => {
           </Link>
           <Link href="/transactions/withdraw" className="text-gray-300 hover:text-white">
             Withdraw
+          </Link>
+          <Link href="/transactions/history" className="text-gray-300 hover:text-white">
+            History
           </Link>
           <Link href="/profile" className="text-gray-300 hover:text-white">
             Profile
