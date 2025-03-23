@@ -1,12 +1,10 @@
 {
-    "builds": [
-      {
-        "src": "apps/user-app/package.json",
-        "use": "@vercel/next"
+    "build": {
+      "env": {
+        "DATABASE_URL": "@database_url"
       }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "apps/user-app/$1" }
-    ]
+    },
+    "installCommand": "npm install --workspaces && npx prisma generate",
+    "buildCommand": "npx prisma generate && next build"
   }
   
