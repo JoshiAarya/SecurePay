@@ -16,13 +16,19 @@ export async function POST(req: Request) {
         });
 
         if(!sender){
-            return NextResponse.json({ message: "Please Login" });
+            return NextResponse.json({ message: "Please Login" },{
+                status: 400
+            });
         }
         if (!receiver) {
-            return NextResponse.json({ message: "User not found" });
+            return NextResponse.json({ message: "User not found" },{
+                status: 400
+            });
         }
         if (!sender.balance || sender.balance.amount < amount) {
-            return NextResponse.json({ message: "Insufficient balance" }, { status: 400 });
+            return NextResponse.json({ message: "Insufficient balance" }, { 
+                status: 400 
+            });
         }
         
         await prisma.$transaction([
