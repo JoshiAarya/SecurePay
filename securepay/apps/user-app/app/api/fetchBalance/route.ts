@@ -8,14 +8,18 @@ const prisma  = new PrismaClient();
 export async function GET(req: Request) {
     const session = await getServerSession();
     if(!session){
-        return NextResponse.json({message: "Please Login"});
+        return NextResponse.json({message: "Please Login"}, {
+            status: 403
+        });
     }
     const user = await prisma.user.findUnique({
         where: {email: session.user?.email||""},
         include: {balance: true}
     })
     if(!user||!user.balance){
-        return NextResponse.json({message: "User not found"});
+        return NextResponse.json({message: "User not found"}, {
+            status: 404
+        });
     }
     return NextResponse.json({msg: user.balance.amount||0}, {status: 200});
 }
