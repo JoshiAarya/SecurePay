@@ -68,18 +68,18 @@ const Withdraw = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-6 bg-white shadow-lg rounded-2xl">
-            <h2 className="text-xl font-bold mb-4 text-center">Withdraw</h2>
+        <form onSubmit={handleSubmit} className="card w-full max-w-sm mx-auto p-6 bg-base-100 shadow-xl rounded-2xl">
+            <h2 className="card-title text-xl mb-4 text-center">Withdraw</h2>
             <div className="mb-4">
-                <p className="text-gray-700 font-medium">Current Balance: 
+                <p className="text-base-content font-medium">Current Balance:
                     <span className="font-semibold ml-2">
-                        {balance !== null ? `$${balance}` : "Loading..."}
+                        {balance !== null ? `$${balance}` : <span className="loading loading-spinner loading-xs text-primary align-middle ml-2"></span>}
                     </span>
                 </p>
             </div>
-            <div className="mb-4">
-                <label htmlFor="amount" className="block text-gray-700 font-semibold mb-2">
-                    Amount:
+            <div className="form-control mb-4">
+                <label htmlFor="amount" className="label">
+                    <span className="label-text">Amount:</span>
                 </label>
                 <input
                     type="number"
@@ -87,14 +87,14 @@ const Withdraw = () => {
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="input input-bordered w-full"
                 />
             </div>
-            {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-            {success && <p className="text-green-600 text-sm mb-4">{success}</p>}
+            {error && <div className="alert alert-error mb-4 py-2 text-sm">{error}</div>}
+            {success && <div className="alert alert-success mb-4 py-2 text-sm">{success}</div>}
             <button
                 type="submit"
-                className="w-full bg-red-600 text-white font-semibold py-2 rounded-lg hover:bg-red-700 transition duration-300"
+                className="btn btn-error w-full"
             >
                 Withdraw
             </button>

@@ -95,22 +95,22 @@ const Transfer: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white shadow-xl rounded-2xl relative"
+      className="card w-full max-w-md mx-auto p-6 bg-base-100 shadow-xl rounded-2xl relative"
       ref={containerRef as RefObject<HTMLFormElement>}
     >
-      <h2 className="text-2xl font-bold mb-6 text-center">
+      <h2 className="card-title text-2xl mb-6 text-center">
         Transfer Money
       </h2>
 
-      {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-      {success && <p className="text-green-600 text-sm mb-4">{success}</p>}
+      {error && <div className="alert alert-error mb-4 py-2 text-sm">{error}</div>}
+      {success && <div className="alert alert-success mb-4 py-2 text-sm">{success}</div>}
 
-      <div className="mb-4 relative">
+      <div className="form-control mb-4 relative">
         <label
           htmlFor="toEmail"
-          className="block text-gray-700 font-semibold mb-2"
+          className="label"
         >
-          Recipient:
+          <span className="label-text">Recipient:</span>
         </label>
         <input
           type="text"
@@ -124,30 +124,30 @@ const Transfer: React.FC = () => {
           }}
           onFocus={() => setShowDropdown(true)}
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input input-bordered w-full"
         />
         {showDropdown && filtered.length > 0 && (
-          <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-lg mt-1 max-h-48 overflow-auto shadow-md">
+          <ul className="absolute z-10 w-full bg-base-100 border border-base-200 rounded-lg mt-1 max-h-48 overflow-auto shadow-md">
             {filtered.map((user) => (
               <li
                 key={user.email}
                 onClick={() => handleSelect(user.email)}
-                className="px-4 py-2 hover:bg-blue-100 cursor-pointer flex justify-between items-center"
+                className="px-4 py-2 hover:bg-primary hover:text-primary-content cursor-pointer flex justify-between items-center"
               >
                 <span>{user.name}</span>
-                <span className="text-gray-500 text-sm">{user.email}</span>
+                <span className="text-xs opacity-70">{user.email}</span>
               </li>
             ))}
           </ul>
         )}
       </div>
 
-      <div className="mb-6">
+      <div className="form-control mb-6">
         <label
           htmlFor="amount"
-          className="block text-gray-700 font-semibold mb-2"
+          className="label"
         >
-          Amount:
+          <span className="label-text">Amount:</span>
         </label>
         <input
           type="number"
@@ -155,13 +155,13 @@ const Transfer: React.FC = () => {
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input input-bordered w-full"
         />
       </div>
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition duration-300"
+        className="btn btn-primary w-full"
       >
         Transfer
       </button>

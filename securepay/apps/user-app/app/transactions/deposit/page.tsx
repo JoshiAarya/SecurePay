@@ -29,10 +29,10 @@ const Deposit = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-6 bg-white shadow-lg rounded-2xl">
-            <div className="mb-4">
-                <label htmlFor="amount" className="block text-gray-700 font-semibold mb-2">
-                    Amount:
+        <form onSubmit={handleSubmit} className="card w-full max-w-sm mx-auto p-6 bg-base-100 shadow-xl rounded-2xl">
+            <div className="form-control mb-6">
+                <label htmlFor="amount" className="label">
+                    <span className="label-text">Amount:</span>
                 </label>
                 <input
                     type="number"
@@ -40,17 +40,16 @@ const Deposit = () => {
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="input input-bordered w-full"
                 />
             </div>
             <button
                 type="submit"
-                className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                className="btn btn-primary w-full"
             >
                 Deposit
             </button>
         </form>
-
     )
 }
 

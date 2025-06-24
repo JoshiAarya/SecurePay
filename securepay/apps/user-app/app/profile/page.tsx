@@ -40,30 +40,39 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="p-5">
-      <h1 className="text-xl font-bold">Profile</h1>
-      {session.user?.image && (
-        <img
-          src={session.user.image}
-          alt="Profile Picture"
-          className="w-20 h-20 rounded-full mt-2"
-        />
-      )}
-      <p><strong>Name:</strong> {session.user?.name}</p>
-      <p><strong>Email:</strong> {session.user?.email}</p>
-
-      {/* Balance Section with Loading & Error Handling */}
-      <p>
-        <strong>Balance:</strong>{" "}
-        {loading ? "Fetching..." : error ? <span className="text-red-500">{error}</span> : `$${amount}`}
-      </p>
-
-      <button
-        onClick={() => signOut()}
-        className="bg-red-500 text-white px-4 py-2 mt-4 rounded"
-      >
-        Sign Out
-      </button>
+    <div className="flex justify-center items-center min-h-[60vh]">
+      <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
+        <h1 className="card-title text-2xl mb-4">Profile</h1>
+        {session.user?.image && (
+          <div className="flex justify-center mb-4">
+            <div className="avatar">
+              <div className="w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img src={session.user.image} alt="Profile Picture" />
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="space-y-2">
+          <p><span className="font-semibold">Name:</span> {session.user?.name}</p>
+          <p><span className="font-semibold">Email:</span> {session.user?.email}</p>
+          <p>
+            <span className="font-semibold">Balance:</span>{' '}
+            {loading ? (
+              <span className="loading loading-spinner loading-xs text-primary align-middle ml-2"></span>
+            ) : error ? (
+              <span className="text-error">{error}</span>
+            ) : (
+              <span className="text-success">${amount}</span>
+            )}
+          </p>
+        </div>
+        <button
+          onClick={() => signOut()}
+          className="btn btn-error mt-6 w-full"
+        >
+          Sign Out
+        </button>
+      </div>
     </div>
   );
 };

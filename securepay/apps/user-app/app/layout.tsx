@@ -24,14 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar/>
+    <html lang="en" data-theme="corporate">
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-base-100`}>
+        <Navbar />
         <Providers>
           {children}
         </Providers>
-        
-        
       </body>
     </html>
   );

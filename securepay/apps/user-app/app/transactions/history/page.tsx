@@ -35,38 +35,40 @@ const Transfer = () => {
     }, [session]);
 
     return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Transaction History</h2>
-            <table className="min-w-full bg-white border border-gray-300">
-                <thead>
-                    <tr className="bg-gray-200">
-                        <th className="py-2 px-4 border">ID</th>
-                        <th className="py-2 px-4 border">Type</th>
-                        <th className="py-2 px-4 border">Amount</th>
-                        <th className="py-2 px-4 border">Status</th>
-                        <th className="py-2 px-4 border">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {transactions.length > 0 ? (
-                        transactions.map((txn) => (
-                            <tr key={txn.id} className="border-t">
-                                <td className="py-2 px-4 border">{txn.id}</td>
-                                <td className={`py-2 px-4 border ${txn.type === "credit" ? "text-green-600" : "text-red-600"}`}>
-                                    {txn.type}
-                                </td>
-                                <td className="py-2 px-4 border">{txn.amount}</td>
-                                <td className="py-2 px-4 border">{txn.status}</td>
-                                <td className="py-2 px-4 border">{new Date(txn.createdAt).toLocaleDateString()}</td>
+        <div className="flex justify-center items-center min-h-[60vh]">
+            <div className="card w-full max-w-3xl bg-base-100 shadow-xl p-6">
+                <h2 className="card-title text-2xl mb-6">Transaction History</h2>
+                <div className="overflow-x-auto">
+                    <table className="table table-zebra w-full">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td  className="text-center py-4">No transactions found</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {transactions.length > 0 ? (
+                                transactions.map((txn) => (
+                                    <tr key={txn.id}>
+                                        <td>{txn.id}</td>
+                                        <td className={txn.type === "credit" ? "text-success" : "text-error"}>{txn.type}</td>
+                                        <td>{txn.amount}</td>
+                                        <td>{txn.status}</td>
+                                        <td>{new Date(txn.createdAt).toLocaleDateString()}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={5} className="text-center py-4">No transactions found</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 };

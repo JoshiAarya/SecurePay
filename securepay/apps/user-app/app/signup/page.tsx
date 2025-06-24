@@ -52,63 +52,71 @@ const Signup = () => {
 
     if(!session){
         return (
-            <div className="flex justify-center items-center h-screen bg-gray-100">
+            <div className="flex justify-center items-center min-h-screen bg-base-200">
                 <form 
                     onSubmit={handleSubmit} 
-                    className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+                    className="card w-full max-w-md bg-base-100 shadow-xl p-8"
                 >
-                    <h2 className="text-2xl font-semibold text-center mb-4">Sign Up</h2>
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700">Email:</label>
+                    <h2 className="card-title text-2xl text-center mb-6">Sign Up</h2>
+                    <div className="form-control mb-4">
+                        <label htmlFor="email" className="label">
+                          <span className="label-text">Email:</span>
+                        </label>
                         <input
                             type="email"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200"
+                            className="input input-bordered w-full"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-gray-700">Password:</label>
+                    <div className="form-control mb-4">
+                        <label htmlFor="password" className="label">
+                          <span className="label-text">Password:</span>
+                        </label>
                         <input
                             type="password"
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200"
+                            className="input input-bordered w-full"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="number" className="block text-gray-700">Phone Number:</label>
+                    <div className="form-control mb-4">
+                        <label htmlFor="number" className="label">
+                          <span className="label-text">Phone Number:</span>
+                        </label>
                         <input
                             type="text"
                             id="number"
                             value={number}
                             onChange={(e) => setNumber(e.target.value)}
                             required
-                            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200"
+                            className="input input-bordered w-full"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="name" className="block text-gray-700">Name:</label>
+                    <div className="form-control mb-6">
+                        <label htmlFor="name" className="label">
+                          <span className="label-text">Name:</span>
+                        </label>
                         <input
                             type="text"
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
-                            className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-200"
+                            className="input input-bordered w-full"
                         />
                     </div>
                     <button 
                         type="submit" 
-                        className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+                        className="btn btn-primary w-full"
                     >
                         Sign Up
                     </button>
-                    <Link href="/api/auth/signin" className="block text-center mt-4 text-blue-500 hover:underline">
+                    <Link href="/api/auth/signin" className="block text-center mt-4 text-primary hover:underline">
                         Already have an account? Sign in
                     </Link>
                 </form>
