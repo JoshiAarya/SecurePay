@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@repo/db/client";
+import { sendEmail } from "../../../lib/sendEmail";
 
 const prisma = new PrismaClient();
 
@@ -30,11 +31,10 @@ export async function POST(req: Request) {
                 },
             }),
         ]);
-
-        console.log(user);
-        console.log("Amount:", amount);
         
-        return NextResponse.json({ message: "Amount depositted successfully", user, amount }, { status: 201 });
+        await sendEmail(user.email, "Amount deposited successfully", `Your account was credited by ${amount} through deposit.`)
+        
+        return NextResponse.json({ message: "Amount deposited successfully", user, amount }, { status: 201 });
     } catch (error) {
         console.error("Deposit error:", error);
         return NextResponse.json({ message: "Failed to deposit" }, { status: 500 });

@@ -17,6 +17,7 @@
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/postcss": "^4.1.10",
     "daisyui": "^5.0.43",
+    "nodemailer": "^6.10.1",
     "tailwindcss": "^4.1.10"
   },
   "engines": {
