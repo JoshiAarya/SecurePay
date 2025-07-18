@@ -1,22 +1,32 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@repo/db/client";
-import { sendEmail } from "../../../lib/sendEmail";
+import { getServerSession } from "next-auth";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
-        const {email, amount} = await req.json();
+        const session = await getServerSession();
+        if (!session || !session.user?.email) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
+
+        const email = session.user.email;
+        const { amount } = await req.json();
+
+        if (typeof amount !== "number" || amount <= 0) {
+            return NextResponse.json({ message: "Invalid amount" }, { status: 400 });
+        }
+
         const user = await prisma.user.findUnique({
-            where: { email: email },
+            where: { email },
             include: { balance: true },
         });
 
-        
         if (!user) {
-            return NextResponse.json({ message: "User not found" });
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
         }
-        
+
         await prisma.$transaction([
             prisma.balance.update({
                 where: { userId: user.id },
@@ -31,10 +41,11 @@ export async function POST(req: Request) {
                 },
             }),
         ]);
-        
-        await sendEmail(user.email, "Amount deposited successfully", `Your account was credited by ${amount} through deposit.`)
-        
-        return NextResponse.json({ message: "Amount deposited successfully", user, amount }, { status: 201 });
+
+        return NextResponse.json(
+            { message: "Amount deposited successfully", amount },
+            { status: 201 }
+        );
     } catch (error) {
         console.error("Deposit error:", error);
         return NextResponse.json({ message: "Failed to deposit" }, { status: 500 });

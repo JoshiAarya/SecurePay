@@ -1,15 +1,24 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@repo/db/client";
+import { getServerSession } from "next-auth";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
-        const { email, amount } = await req.json();
+        const session = await getServerSession();
+        if (!session || !session.user?.email) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
+        const email = session.user.email;
+        const { amount } = await req.json();
 
-        // Find user and balance
+        if (typeof amount !== "number" || amount <= 0) {
+            return NextResponse.json({ message: "Invalid amount" }, { status: 400 });
+        }
+
         const user = await prisma.user.findUnique({
-            where: { email: email },
+            where: { email },
             include: { balance: true },
         });
 
@@ -17,12 +26,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: "User not found" }, { status: 404 });
         }
 
-        // Check if balance exists and is sufficient
         if (!user.balance || user.balance.amount < amount) {
             return NextResponse.json({ message: "Insufficient balance" }, { status: 400 });
         }
 
-        // Perform withdrawal atomically
         await prisma.$transaction([
             prisma.balance.update({
                 where: { userId: user.id },
@@ -39,7 +46,7 @@ export async function POST(req: Request) {
         ]);
 
         return NextResponse.json(
-            { message: "Amount withdrawn successfully", user, amount },
+            { message: "Amount withdrawn successfully", amount },
             { status: 201 }
         );
     } catch (error) {
